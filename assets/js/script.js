@@ -45,7 +45,7 @@ var searchButtonHandler = function(event) {
     geoAPI();
     displayHistory();
   } else {
-      // alert('Please enter a city')
+      alert('Please enter a city')
       city;
   }
   $('input:text').val('');
@@ -60,6 +60,7 @@ var historyButtonHandler = function() {
   geoAPI();
 }
 
+// Location api call
 function geoAPI() {
   var geoLoc = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${apiKey}`;
 // calling the API for location based on search bar to get latitude and longitude
@@ -81,7 +82,7 @@ function geoAPI() {
     console.error(err);
   });
 };
-
+// weather api call
 function weatherAPI() {
   var oneCallWeather = `https://api.openweathermap.org/data/2.5/onecall?lat=${lati}&lon=${long}&exclude=minutely,hourly&units=imperial&appid=${apiKey}`;
   // console.log(oneCallWeather);
@@ -92,7 +93,7 @@ function weatherAPI() {
     return res.json();
   })
   .then(function (data) {
-  //TODO: make your second call here so that you have access to "data"
+
     console.log(data);
     var currentWeatherIcon = data.current.weather[0].icon;
     $('#current-icon').attr('src', `https://openweathermap.org/img/w/${currentWeatherIcon}.png`).attr('width', '90').attr('height', '90');
@@ -151,7 +152,7 @@ $('#fivedaycards').empty();
     console.error(err);
   });
 };
-
+// clear history button's fucntion
 function clearHistory() {
   $('#history').empty();
   localStorage.clear();
@@ -159,8 +160,9 @@ function clearHistory() {
   $('clearHistory').addClass('hidden');
 }
 
-
+// various actions users can do and listening for it.
 $('.city-search').on('submit', searchButtonHandler);
 $('#history').on('click','li.pastBtn', historyButtonHandler);
 $('#clearHistory').on('click', clearHistory);
+// On page load
 showHistory();
