@@ -34,3 +34,23 @@ form.city-search::after {
     clear: both;
     display: table;
 }
+
+.uvlow {
+    background-color: green;
+}
+
+.uvmedlow {
+    background-color: yellow;
+}
+
+.uvmedhigh {
+    background-color: orange;
+}
+
+.uvhigh {
+    background-color: red;
+}
+
+.uvextreme {
+    background-color: violet;
+}

@@ -21,13 +21,13 @@
         </h1>
     </header>
     <main>
-        <div class="container">
-            <div class="row content-row">
-                <div class="col-12 col-md-4">
-                    <div class="m-3">
+        <div class="container-fluid">
+            <div class="row content-row mw-100">
+                <div class="col-12 col-md-3">
+                    <div class="m-2">
                         <h4> Search for a City: </h4>
                         <form class="city-search form-group input-group" style="margin:auto;max-width:300px">
-                            <input type="text" placeholder="Search..." class="searchitem">
+                            <input type="text" placeholder="Search..." id="search-input">
                             <button type="submit" class=""><i class="fa fa-search"></i></button>
                         </form>
                     </div>
@@ -37,32 +37,33 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-12 col-md-8">
+                <div class="col-12 col-md-9">
                     <div class="jumbotron">
-                        <h2 class="display-4"> City Name <span id="date"></span> <span></span> </h2>
+                        <h2 class="display-4"> <span  id="city-name">Current Time </span><span id="date"></span> <img id="current-icon"/> </h2>
                         <br>
                         <br>
                         <p class="lead"> 
-                            Temperature: <span></span>
+                            Temperature: <span id="temp"></span>
                         </p>
                         <p class="lead"> 
-                            Humidity: <span></span>
+                            Humidity: <span id="hum"></span>
                         </p>
                         <p class="lead"> 
-                            Wind Speed: <span></span>
+                            Wind Speed: <span id="wind"></span>
                         </p>
                         <p class="lead"> 
-                            UV Index: <span class=""></span>
+                            UV Index: <span class="" id="uvi"></span>
                         </p>
                         <p>
 
                         </p>
                       </div>
-                    <div class="">
+                    <div class="row">
                         <h2>
                             5-Day Forecast:
                         </h2>
-                        <div></div>
+                    </div>
+                    <div id="fivedaycards" class="row">
                     </div>
                 </div>
             </div>
