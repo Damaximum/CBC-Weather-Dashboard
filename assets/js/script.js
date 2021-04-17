@@ -8,13 +8,15 @@ var city;
 var currentDay = moment().format('(MM/DD/YYYY)');
 $('#date').text(currentDay);
 
-// creating the search history TODO: Separate saving history and listing history!
+// creating and updating the search history
 function displayHistory() {
-  if (searchHistory.indexOf($('#search-input') === -1)) {
+  var searchValue = $('#search-input').val().trim();
+  if (searchHistory.indexOf(searchValue) === -1) {
   searchHistory.push(city);
   } else {
-    var updateCity = searchHistory.indexOf($('#search-input'));
-    searchHistory.splic(updateCity, 1);
+    var updateCity = searchHistory.indexOf(searchValue);
+    // console.log(updateCity);
+    searchHistory.splice(updateCity, 1);
     searchHistory.push(city);
   }
   localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
@@ -25,11 +27,12 @@ function displayHistory() {
 function showHistory() {
   $('#history').empty();
   for (var i = 0; i < searchHistory.length; i++) {
-    var historySearch = $('<li class="list-group-item" id="pastBtn">');
-    historySearch.attr("data-city", city);
+    var historySearch = $('<li class="list-group-item pastBtn">');
+    historySearch.attr("data-city", searchHistory[i]);
     historySearch.text(searchHistory[i]);
     $('#history').prepend(historySearch);
-}
+  }
+  $('#clearHistory').removeClass('hidden');
 }
 
 // Search button functionality
@@ -49,9 +52,10 @@ var searchButtonHandler = function(event) {
 };
 
 // History button functionality
-var historyButtonHandler = function(event) {
-  var pastCity = event.target.attr('data-city')
-  console.log(pastCity);
+var historyButtonHandler = function() {
+  console.log(this);
+  var pastCity = $(this).attr('data-city');
+  
   city = pastCity;
   geoAPI();
 }
@@ -96,8 +100,20 @@ function weatherAPI() {
     $('#hum').text(data.current.humidity + '%');
     $('#wind').text(data.current.wind_speed + ' mph');
     $('#uvi').text(data.current.uvi);
+    if (data.current.uvi < 3) {
+      $('#uvi').addClass('uvlow');
+    } else if (data.current.uvi < 6) {
+      $('#uvi').addClass('uvmedlow');
+    } else if (data.current.uvi < 8) {
+      $('#uvi').addClass('uvmedhigh');
+    } else if (data.current.uvi < 11) {
+      $('#uvi').addClass('uvhigh');
+    } else {
+      $('#uvi').addClass('uvextreme');
+    };
 
 // code to build weather cards
+$('#fivedaycards').empty();
     for (var i = 1; i < 6; i++) {
       var fivedayCol = $('<div class="col-12 col-md-6 col-lg mb-3 forecastcard">');
       var fivedayCard = $("<div class='card'>")
@@ -115,11 +131,11 @@ function weatherAPI() {
       fivedayTemp.html('Temp: ' + data.daily[i].temp.max + ' °F');
       fivedayHumidity.html('Humidity: ' + data.daily[i].humidity + '%');
       
-      console.log(fivedayDate);
-      console.log(fivedayIcon);
-      console.log(fivedayTemp);
-      console.log(fivedayHumidity);
-      console.log(i);
+      // console.log(fivedayDate);
+      // console.log(fivedayIcon);
+      // console.log(fivedayTemp);
+      // console.log(fivedayHumidity);
+      // console.log(i);
 
       fivedayCardBody.append(fivedayDate);
       fivedayCardBody.append(fivedayIcon);
@@ -136,8 +152,15 @@ function weatherAPI() {
   });
 };
 
+function clearHistory() {
+  $('#history').empty();
+  localStorage.clear();
+  searchHistory = [];
+  $('clearHistory').addClass('hidden');
+}
 
 
 $('.city-search').on('submit', searchButtonHandler);
-$('.history').on('click','li.pastBtn', historyButtonHandler);
+$('#history').on('click','li.pastBtn', historyButtonHandler);
+$('#clearHistory').on('click', clearHistory);
 showHistory();

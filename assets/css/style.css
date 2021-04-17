@@ -36,21 +36,40 @@ form.city-search::after {
 }
 
 .uvlow {
-    background-color: green;
+    background-color: lightgreen;
+    border-radius: 4px;
+    font-weight: bolder;
 }
 
 .uvmedlow {
-    background-color: yellow;
+    background-color: lightgoldenrodyellow;
+    border-radius: 4px;
+    font-weight: bolder;
 }
 
 .uvmedhigh {
-    background-color: orange;
+    background-color: lightsalmon;
+    border-radius: 4px;
+    font-weight: bolder;
 }
 
 .uvhigh {
-    background-color: red;
+    background-color: lightcoral;
+    border-radius: 4px;
+    font-weight: bolder;
 }
 
 .uvextreme {
-    background-color: violet;
+    background-color: lightpink;
+    border-radius: 4px;
+    font-weight: bolder;
+}
+
+.hidden {
+    display: none;
+}
+
+.pastBtn:hover {
+    background-color: lightgrey;
+    cursor: pointer;
 }
